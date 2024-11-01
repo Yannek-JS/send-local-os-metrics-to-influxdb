@@ -1,2 +1,3 @@
-# send-local-os-metrics-to-influxdb
-A simple script for sending the locally collected metrics to InfluxDB
+# The script for sending the locally collected OS metrics to InfluxDB
+
+A simple script for sending the locally collected OS metrics to InfluxDB. May be used as a start point for some exercises.
