@@ -118,11 +118,11 @@ if args.verbose:
 
 
 # Collects CPU total and physical memory utilisation [ % ]
-cpu_util: float = cpu_percent()
+cpu_util: float = cpu_percent(interval = 1)
 memory_util: float = virtual_memory().percent
 
 # Puts collected metrics into the list wrapping them with Influx line protocol format.
-metric_line_proto: list = [
+metrics_line_proto: list = [
     f"cpu_utilisation,host=ansible percent_usage={cpu_util}",
     f"memory_utilisation,host=ansible percent_usage={memory_util}"
 ]
@@ -138,8 +138,8 @@ request_headers.update({"Content-Encoding": "gzip"}) if args.influxdb_gzip else 
 line: str = ""
 to_send: str = ""
 counter: int = 0
-lines_to_send: int = len(metric_line_proto)
-for line in metric_line_proto:
+lines_to_send: int = len(metrics_line_proto)
+for line in metrics_line_proto:
     lines_to_send -= 1
     counter += len(line)
     to_send += f"{line}\n"
