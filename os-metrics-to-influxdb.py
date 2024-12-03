@@ -122,8 +122,8 @@ if args.verbose:
 cpu_util: float = cpu_percent(interval = 1)
 memory_util: float = virtual_memory().percent
 
-if time() % 2:
-    memory_util_metric = f"memory_utilisation,host=ansible percent_usage={memory_util},test_null={(time()%2)}"
+if int(time()) % 2:
+    memory_util_metric = f"memory_utilisation,host=ansible percent_usage={memory_util},test_null={int(time()) % 2}"
 else:
     memory_util_metric = f"memory_utilisation,host=ansible percent_usage={memory_util}"
 
