@@ -6,6 +6,7 @@ import json
 import logging
 import os
 import sys
+from time import time
 
 import requests
 from psutil import cpu_percent, virtual_memory
@@ -121,10 +122,15 @@ if args.verbose:
 cpu_util: float = cpu_percent(interval = 1)
 memory_util: float = virtual_memory().percent
 
+if time() % 2:
+    memory_util_metric = f"memory_utilisation,host=ansible percent_usage={memory_util},test_null={(time()%2)}"
+else:
+    memory_util_metric = f"memory_utilisation,host=ansible percent_usage={memory_util}"
+
 # Puts collected metrics into the list wrapping them with Influx line protocol format.
 metrics_line_proto: list = [
     f"cpu_utilisation,host=ansible percent_usage={cpu_util}",
-    f"memory_utilisation,host=ansible percent_usage={memory_util}"
+    memory_util_metric
 ]
 
 
